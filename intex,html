@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>San Valentín Matemático 💘</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+text-align:center;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+overflow:hidden;
+color:white;
+}
+
+/* corazones flotantes */
+.heart{
+position:absolute;
+animation:flotar 6s linear infinite;
+}
+@keyframes flotar{
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);}
+}
+
+button{
+padding:12px 20px;
+margin:10px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+font-size:16px;
+background:#ff4d6d;
+color:white;
+box-shadow:0 0 15px pink;
+transition:0.3s;
+}
+button:hover{
+transform:scale(1.1);
+}
+
+canvas{
+background:white;
+border-radius:15px;
+margin-top:20px;
+}
+
+#ecuaciones{
+background:rgba(255,255,255,0.2);
+padding:10px;
+margin:10px;
+border-radius:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>💘 San Valentín Matemático 💘</h1>
+
+<button onclick="love()">ALL YOU NEED IS LOVE</button>
+<button onclick="corazon()">Fórmulas del Amor</button>
+<button onclick="teamo()">TE AMO Especial</button>
+
+<div id="ecuaciones"></div>
+
+<canvas id="grafica" width="600" height="400"></canvas>
+
+<script>
+
+// corazones flotantes
+for(let i=0;i<25;i++){
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(10+Math.random()*20)+"px";
+h.style.animationDuration=(3+Math.random()*5)+"s";
+document.body.appendChild(h);
+}
+
+let chart;
+
+function dibujar(x,y,label){
+const ctx=document.getElementById("grafica");
+
+if(chart){chart.destroy();}
+
+chart=new Chart(ctx,{
+type:'line',
+data:{
+labels:x,
+datasets:[{
+label:label,
+data:y,
+borderWidth:2,
+pointRadius:0
+}]
+},
+options:{responsive:false}
+});
+}
+
+// BOTON LOVE (imagen 1)
+function love(){
+
+document.getElementById("ecuaciones").innerHTML=
+`y = 1/x<br>
+x² + y² = 9<br>
+y = |-2x|<br>
+x = -3|sin y|`;
+
+let x=[];
+let y=[];
+
+// círculo O
+for(let t=0;t<=Math.PI*2;t+=0.1){
+x.push(5+3*Math.cos(t));
+y.push(3*Math.sin(t));
+}
+
+dibujar(x,y,"LOVE");
+}
+
+// BOTON CORAZON (imagen 2)
+function corazon(){
+
+document.getElementById("ecuaciones").innerHTML=
+`y1 = √(1-(|x|-1)²)<br>
+y2 = -2.5√(1-√|x|/2)`;
+
+let x=[];
+let y=[];
+
+for(let i=-2;i<=2;i+=0.05){
+
+let y1=Math.sqrt(Math.max(0,1-Math.pow(Math.abs(i)-1,2)));
+let y2=-2.5*Math.sqrt(Math.max(0,1-Math.sqrt(Math.abs(i))/2));
+
+x.push(i);
+y.push(y1);
+
+x.push(i);
+y.push(y2);
+}
+
+dibujar(x,y,"Corazón matemático ❤️");
+}
+
+// BOTON TE AMO (imagen 3)
+function teamo(){
+
+document.getElementById("ecuaciones").innerHTML=
+`x = TE AMO ❤️`;
+
+let x=[];
+let y=[];
+
+for(let t=0;t<=Math.PI*2;t+=0.02){
+let xt=16*Math.pow(Math.sin(t),3);
+let yt=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+x.push(xt);
+y.push(yt);
+}
+
+dibujar(x,y,"TE AMO 💘");
+}
+
+</script>
+
+</body>
+</html>
